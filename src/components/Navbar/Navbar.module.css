@@ -21,3 +21,13 @@
 .navbar ul li:hover {
   border-bottom: 2px solid grey;
 }
+
+.navbar h1 {
+  font-family: 'Pacifico', cursive;
+  font-size: 2rem;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #ffffff;
+}
