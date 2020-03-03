@@ -1,4 +1,30 @@
+import tokenService from './tokenService';
+
 const BASE_URL = '/api/users/';
+
+function login(credentials) {
+  return fetch(BASE_URL + 'login', {
+    method: 'POST',
+    headers: new Headers({ 'Content-type': 'Application/json' }),
+    body: JSON.stringify(credentials)
+  })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Bad Credentials');
+      }
+    })
+    .then(({ token }) => tokenService.setToken(token));
+}
+
+function logout() {
+  tokenService.removeToken();
+}
+
+function getUser() {
+  return tokenService.getUserFromToken();
+}
 
 function signup(user) {
   return fetch(BASE_URL + 'signup', {
@@ -13,9 +39,12 @@ function signup(user) {
         throw new Error('Email Already Taken!');
       }
     })
-    .then(data => console.log(data));
+    .then(({ token }) => tokenService.setToken(token));
 }
 
 export default {
-  signup
+  signup,
+  getUser,
+  logout,
+  login
 };
